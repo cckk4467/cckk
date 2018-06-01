@@ -6,31 +6,31 @@
 
 首先，脑袋里一定要清楚三个概念的联系：工作区->缓存区->仓库
 
-***git add -A  ***添加修改到缓冲区
-***git commit -m "describe"  ***移动缓冲区文件到仓库
-***git reset --hard HEAD^  ***回退到上一个版本HEAD^^  HEAD~100
-***git checkout -- x.x  ***把暂存区清空并把工作区的修改还原为最新版本库
+***git add -A*** 添加修改到缓冲区
+***git commit -m "describe"*** 移动缓冲区文件到仓库
+***git reset --hard HEAD^*** 回退到上一个版本HEAD^^  HEAD~100
+***git checkout -- x.x*** 把暂存区清空并把工作区的修改还原为最新版本库
 
 ### 分支
 #### 性质：从原分支分出去会继承原分支的工作区的缓冲区，原分支的工作区的缓冲区会丢失
 
-***git branch *** 查看分支，带*号的是当前分支
-***git branch *** xxx 创建xxx分支
-***git checkout *** xxx 切换到xxx分支
+***git branch*** 查看分支，带*号的是当前分支
+***git branch*** xxx 创建xxx分支
+***git checkout*** xxx 切换到xxx分支
 以上两句等同于
-***git checkout -b *** xxx创建并切换到
-***git merge xxx ***  融入xxx分支到当前分支
-***git branch -d *** xxx 删除分支(d大写是强制删除)
+***git checkout -b*** xxx创建并切换到
+***git merge xxx***  融入xxx分支到当前分支
+***git branch -d*** xxx 删除分支(d大写是强制删除)
  
 ***先创建新的分支，切换并在其上面工作，最后记得commit提交内容到分支
-切换回master，合并分支到master，然后删除分支，搞定 ***
+切换回master，合并分支到master，然后删除分支，搞定***
 当然你也可以很暴力地直接在master上操作=。=
 
 ### 暂存区
 #### 性质：在原分支上申请一个暂存区，把原分支的工作区移动进去，并清除原分支的缓存区，达到清空原分支工作区的缓冲区的效果，还原时，只能还原暂存区保存的工作区内容了
 
-***git stash *** 在当前分支上，丢失当前缓冲区的内容，保存工作区的内容
-***git stash pop *** 在当前分支上，还原之前工作区的所有内容
+***git stash*** 在当前分支上，丢失当前缓冲区的内容，保存工作区的内容
+***git stash pop*** 在当前分支上，还原之前工作区的所有内容
 
 
 
@@ -50,7 +50,7 @@
 >这就是多人协作的工作模式，一旦熟悉了，就非常简单。
 
 
-##附：git的fetch和pull用法
+## 附：git的fetch和pull用法
 
 >git fetch origin master:cc >获取远程分支合并到本地cc分支上，若cc不存在则创建它
 >git diff cc
@@ -74,5 +74,5 @@ fetch后的内容是在cc分支上的缓冲区还是commit后的仓库
 看看cc内容分布情况
 
 ### 实验结果：
-***git fetch cc后会直接放到cc的仓库，然后再merge合并 ***
-git  pull orgin master:cc 看不懂什么情况，反正怎么样都会直接合并冲突到master里2333
+***git fetch cc后会直接放到cc的仓库，然后再merge合并***
+git pull orgin master:cc 看不懂什么情况，反正怎么样都会直接合并冲突到master里2333
