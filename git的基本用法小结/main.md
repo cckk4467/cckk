@@ -1,74 +1,78 @@
-#��һЩgit������ܽᣬ����tutorialŶ
+***asdas***
 
-���ȣ��Դ���һ��Ҫ��������������ϵ��������->������->�ֿ�
 
-*** git add -A  ***�����޸ĵ�������
-*** git commit -m "describe"  ***�ƶ��������ļ����ֿ�
-*** git reset --hard HEAD^  ***���˵���һ���汾HEAD^^  HEAD~100
-*** git checkout -- *.*  ***���ݴ�����ղ��ѹ��������޸Ļ�ԭΪ���°汾��
 
-###��֧
-####���ʣ���ԭ��֧�ֳ�ȥ��̳�ԭ��֧�Ĺ������Ļ�������ԭ��֧�Ĺ������Ļ������ᶪʧ
+# 对一些git命令的总结，不是tutorial哦
 
-*** git branch *** �鿴��֧����*�ŵ��ǵ�ǰ��֧
-*** git branch *** xxx ����xxx��֧
-*** git checkout *** xxx �л���xxx��֧
-���������ͬ��
-*** git checkout -b *** xxx�������л���
-*** git merge xxx ***  ����xxx��֧����ǰ��֧
-*** git branch -d *** xxx ɾ����֧(d��д��ǿ��ɾ��)
+首先，脑袋里一定要清楚三个概念的联系：工作区->缓存区->仓库
+
+***git add -A  ***添加修改到缓冲区
+***git commit -m "describe"  ***移动缓冲区文件到仓库
+***git reset --hard HEAD^  ***回退到上一个版本HEAD^^  HEAD~100
+***git checkout -- x.x  ***把暂存区清空并把工作区的修改还原为最新版本库
+
+### 分支
+#### 性质：从原分支分出去会继承原分支的工作区的缓冲区，原分支的工作区的缓冲区会丢失
+
+***git branch *** 查看分支，带*号的是当前分支
+***git branch *** xxx 创建xxx分支
+***git checkout *** xxx 切换到xxx分支
+以上两句等同于
+***git checkout -b *** xxx创建并切换到
+***git merge xxx ***  融入xxx分支到当前分支
+***git branch -d *** xxx 删除分支(d大写是强制删除)
  
-*** �ȴ����µķ�֧���л����������湤�������ǵ�commit�ύ���ݵ���֧
-�л���master���ϲ���֧��master��Ȼ��ɾ����֧���㶨 ***
-��Ȼ��Ҳ���Ժܱ�����ֱ����master�ϲ���=��=
+***先创建新的分支，切换并在其上面工作，最后记得commit提交内容到分支
+切换回master，合并分支到master，然后删除分支，搞定 ***
+当然你也可以很暴力地直接在master上操作=。=
 
-###�ݴ���
-####���ʣ���ԭ��֧������һ���ݴ�������ԭ��֧�Ĺ������ƶ���ȥ�������ԭ��֧�Ļ��������ﵽ���ԭ��֧�������Ļ�������Ч������ԭʱ��ֻ�ܻ�ԭ�ݴ�������Ĺ�����������
+### 暂存区
+#### 性质：在原分支上申请一个暂存区，把原分支的工作区移动进去，并清除原分支的缓存区，达到清空原分支工作区的缓冲区的效果，还原时，只能还原暂存区保存的工作区内容了
 
-*** git stash *** �ڵ�ǰ��֧�ϣ���ʧ��ǰ�����������ݣ����湤����������
-*** git stash pop *** �ڵ�ǰ��֧�ϣ���ԭ֮ǰ����������������
-
-
+***git stash *** 在当前分支上，丢失当前缓冲区的内容，保存工作区的内容
+***git stash pop *** 在当前分支上，还原之前工作区的所有内容
 
 
->��ˣ�����Э���Ĺ���ģʽͨ����������
-
->���ȣ�������ͼ��git push origin branch-name�����Լ����޸ģ�
-
->�������ʧ�ܣ�����ΪԶ�̷�֧����ı��ظ��£���Ҫ����git pull��ͼ�ϲ���
-
->����ϲ��г�ͻ��������ͻ�����ڱ����ύ��
-
->û�г�ͻ���߽������ͻ������git push origin branch-name���;��ܳɹ���
-
->���git pull��ʾ��no tracking >information������˵�����ط�֧��Զ�̷�֧�����ӹ�ϵû�д�����������git >branch --set-upstream-to=origin/<branch> <branch>
-
->����Ƕ���Э���Ĺ���ģʽ��һ����Ϥ�ˣ��ͷǳ��򵥡�
 
 
-##����git��fetch��pull�÷�
+>因此，多人协作的工作模式通常是这样：
 
->git fetch origin master:cc >��ȡԶ�̷�֧�ϲ�������cc��֧�ϣ���cc�������򴴽���
+>首先，可以试图用git push origin branch-name推送自己的修改；
+
+>如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+
+>如果合并有冲突，则解决冲突，并在本地提交；
+
+>没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+
+>如果git pull提示“no tracking >information”，则说明本地分支和远程分支的链接关系没有创建，用命令git >branch --set-upstream-to=origin/<branch> <branch>
+
+>这就是多人协作的工作模式，一旦熟悉了，就非常简单。
+
+
+##附：git的fetch和pull用法
+
+>git fetch origin master:cc >获取远程分支合并到本地cc分支上，若cc不存在则创建它
 >git diff cc
->>(�����õ�diff�﷨��:git diff branchName filepath 
->>��ǰ��֧���ļ���branchName ��֧���ļ����бȽ�)
+>>(这里用的diff语法是:git diff branchName filepath 
+>>当前分支的文件与branchName 分支的文件进行比较)
 
->git merge cc     (������Զ��ں��ļ��в�ͬ�ĵط�������ʲô>>><<<===���ָ�)
+>git merge cc     (这里会自动融合文件中不同的地方就是用什么>>><<<===来分隔)
 >git branch -d cc
 
->����Ч����ͬ��
+>以上效果等同于
 >git pull orgin master:master
 
-###���ʣ�
-fetch�����������cc��֧�ϵĻ���������commit��Ĳֿ�
-###�²⣺
-��Ϊdiff���ڻ�����������ʱ�ȽϹ������ͻ������Ĳ�𣬷��߱ȽϹ���������commit�Ĳֿ�
-����fetch����ȥ������cc��֧�Ļ���������������ֿ�
+### 疑问：
+fetch后的内容是在cc分支上的缓冲区还是commit后的仓库
+### 猜测：
+因为diff若在缓冲区有内容时比较工作区和缓冲区的差别，否者比较工作区和已commit的仓库
+所以fetch数据去到的是cc分支的缓冲区？或者是其仓库
 
-###ʵ�飺�����������
-����git pull orgin master:cc
-����cc���ݷֲ����
+### 实验：解决上述疑问
+试试git pull orgin master:cc
+看看cc内容分布情况
 
-###ʵ������
-*** git fetch cc���ֱ�ӷŵ�cc�Ĳֿ⣬Ȼ����merge�ϲ� ***
-git  pull orgin master:cc ������ʲô�����������ô������ֱ�Ӻϲ���ͻ��master��2333
+### 实验结果：
+***git fetch cc后会直接放到cc的仓库，然后再merge合并 ***
+git  pull orgin master:cc 看不懂什么情况，反正怎么样都会直接合并冲突到master里2333
