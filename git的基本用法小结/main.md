@@ -1,7 +1,3 @@
-***asdas***
-
-
-
 # 对一些git命令的总结，不是tutorial哦
 
 首先，脑袋里一定要清楚三个概念的联系：工作区->缓存区->仓库
@@ -84,4 +80,5 @@ fetch后的内容是在cc分支上的缓冲区还是commit后的仓库
 
 ### 实验结果：
 ***git fetch cc后会直接放到cc的仓库，然后再merge合并***
+
 git pull orgin master:cc 看不懂什么情况，反正怎么样都会直接合并冲突到master里2333
